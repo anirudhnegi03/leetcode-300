@@ -62,6 +62,11 @@ class Solution {
                 }
             }
         }
+        for (int i = 0; i < V; i++) {
+            if (dist[i] == Integer.MAX_VALUE) {
+                dist[i] = -1;
+            }
+        }
         return dist;
         
     }
