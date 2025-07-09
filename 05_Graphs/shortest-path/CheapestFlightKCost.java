@@ -1,4 +1,5 @@
 //https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+
 class Solution {
     class Pair {
         int city, cost, stops;
@@ -28,9 +29,9 @@ class Solution {
             adj.get(u).add(new GraphPair(v,w));
         }
         PriorityQueue<Pair> pq=new PriorityQueue<>((a,b)->a.cost-b.cost);
-        int[] dist = new int[n];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[src] = 0;
+        int[][] visited = new int[n][k+2];
+        for (int[] row : visited) Arrays.fill(row, Integer.MAX_VALUE);
+
         pq.add(new Pair(src, 0, 0));
         while(!pq.isEmpty()){
             Pair curr = pq.poll();
@@ -45,10 +46,9 @@ class Solution {
                 int nextCity = neighbor.node;
                 int weight = neighbor.weight;
                 int newCost = cost + weight;
-
-                if (newCost < dist[nextCity]) {
+                if (newCost < visited[nextCity][stops + 1]) {
+                    visited[nextCity][stops + 1] = newCost;
                     pq.add(new Pair(nextCity, newCost, stops + 1));
-                    dist[nextCity] = newCost;
                 }
             }
         }
